@@ -13,5 +13,8 @@ deploy:jdk8:
   script:
     - mvn clean package -Dmaven.test.skip=true
     - find / -name spring-boot-starter-parent-2.6.3.pom
+  artifacts:
+    paths:
+      - target/hello-dockerfile-*-SNAPSHOT.jar
   only:
     - master
