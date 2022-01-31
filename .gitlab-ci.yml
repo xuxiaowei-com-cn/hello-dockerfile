@@ -1,5 +1,6 @@
 stages:
   - deploy
+  - build
 
 variables:
   MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
@@ -19,5 +20,18 @@ deploy:jdk8:
   artifacts:
     paths:
       - target/hello-dockerfile-*-SNAPSHOT.jar
+  only:
+    - master
+
+docker-build:
+  # Use the official docker image.
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker build -t hello-dockerfile:0.0.1 .
+  after_script:
+    - docker images
   only:
     - master
