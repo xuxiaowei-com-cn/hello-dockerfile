@@ -14,3 +14,28 @@ sudo systemctl start docker.service
 sudo systemctl enable docker.service
 systemctl list-unit-files | grep docker
 ```
+
+- 创建容器
+
+```
+docker run \
+--restart=always \
+-itd \
+--privileged=true \
+--name hello-dockerfile_0.0.1 \
+-p 1001:1001 \
+-v /home/data/hello-dockerfile/:/home \
+hello-dockerfile:0.0.1
+```
+
+- 进入容器
+
+```
+docker exec -it hello-dockerfile_0.0.1 bash
+```
+
+- 测试容器
+
+```
+curl 127.0.0.1:1001
+```
