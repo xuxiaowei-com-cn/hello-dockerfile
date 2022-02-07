@@ -33,5 +33,9 @@ docker-build:
     - docker build -t hello-dockerfile:0.0.1 .
   after_script:
     - docker images
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker tag hello-dockerfile:0.0.1 $DOCKER_USERNAME/hello-dockerfile:0.0.1
+    - docker images
+    - docker push $DOCKER_USERNAME/hello-dockerfile:0.0.1
   only:
     - master
